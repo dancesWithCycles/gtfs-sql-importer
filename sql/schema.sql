@@ -445,12 +445,8 @@ insert into transfer_types (transfer_type, description) VALUES
   (2,'Transfer possible with min_transfer_time window'),
   (3,'Transfers forbidden');
 
-insert into location_types(location_type, description) values 
-  (0,'stop'),
-  (1,'station'),
-  (2,'station entrance'),
-  (3,'generic node'),
-  (4,'boarding area');
+INSERT INTO location_types(location_type,description)
+VALUES (0,'stops'),(1,'station'),(2,'station entrance'),(3,'generic node'),(4,'boarding area');
 
 insert into wheelchair_boardings(wheelchair_boarding, description) values
    (0, 'No accessibility information available for the stop'),
