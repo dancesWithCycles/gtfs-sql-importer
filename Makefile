@@ -1,13 +1,19 @@
 SHELL := /bin/bash
 
-TABLES = trips routes \
-	calendar_dates calendar \
-	shapes stops \
-	transfers frequencies \
-	attributions translations pathways levels \
+TABLES = calendar \
+	pathways \
+	translations \
+	shapes \
+	calendar_dates \
+	levels \
+	stops \
 	fare_attributes fare_rules agency feed_info \
+	routes \
+	transfers \
+	trips \
+	frequencies \
+	attributions \
 	stop_times
-
 
 SCHEMA = gtfs
 
