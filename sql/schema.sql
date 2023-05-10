@@ -380,9 +380,7 @@ CREATE TABLE transfers (
     REFERENCES trips (feed_index, trip_id),
   CONSTRAINT transfers_to_trip_fkey FOREIGN KEY (feed_index, to_trip_id)
     REFERENCES trips (feed_index, trip_id),
-  CONSTRAINT transfers_service_fkey FOREIGN KEY (feed_index, service_id)
-    REFERENCES calendar (feed_index, service_id),
-  CONSTRAINT transfers_pkey PRIMARY KEY (feed_index, from_stop_id, to_stop_id)
+  CONSTRAINT transfers_pkey PRIMARY KEY (feed_index, from_stop_id, to_stop_id, from_trip_id, to_trip_id)
 );
 
 CREATE TABLE pathway_modes (
