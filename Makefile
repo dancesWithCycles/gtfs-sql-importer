@@ -9,8 +9,8 @@ TABLES = calendar \
 	stops \
 	fare_attributes fare_rules agency feed_info \
 	routes \
-	transfers \
 	trips \
+	transfers \
 	frequencies \
 	attributions \
 	stop_times
