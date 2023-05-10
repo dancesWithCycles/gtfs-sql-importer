@@ -364,10 +364,10 @@ CREATE TABLE transfers (
   to_stop_id text not null,
   transfer_type int not null REFERENCES transfer_types(transfer_type),
   min_transfer_time int,
-  from_route_id text default,
-  to_route_id text default,
-  from_trip_id text default,
-  to_trip_id text default,
+  from_route_id text,
+  to_route_id text,
+  from_trip_id text,
+  to_trip_id text,
   CONSTRAINT transfers_from_stop_fkey FOREIGN KEY (feed_index, from_stop_id)
     REFERENCES stops (feed_index, stop_id),
   CONSTRAINT transfers_to_stop_fkey FOREIGN KEY (feed_index, to_stop_id)
