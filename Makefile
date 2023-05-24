@@ -46,7 +46,7 @@ load: $(addprefix load-,$(TABLES))
 	$(psql) -v schema=$(SCHEMA) -v feed_file=$(GTFS) --set srid=$(SRID) -f sql/stop_time_update_distance.sql
 	@$(psql) -t -A -c "SELECT format('* loaded %s with feed index = %s', feed_file, feed_index) FROM $(SCHEMA).feed_info WHERE feed_file = '$(GTFS)'"
 
-zhv-load: $(addprefix zhv-load-,$(TABLES_ZVH))
+zhv_load: $(addprefix zhv-load-,$(TABLES_ZVH))
 	$(psql) -v schema=$(SCHEMA_ZHV) -v feed_file=$(ZHV_ZIP) --set srid=$(SRID) -f sql/shape_geoms_populate.sql
 	$(psql) -v schema=$(SCHEMA_ZHV) -v feed_file=$(ZHV_ZIP) --set srid=$(SRID) -f sql/stop_time_update_distance.sql
 	@$(psql) -t -A -c "SELECT format('* loaded %s with feed index = %s', feed_file, feed_index) FROM $(SCHEMA_ZHV).feed_info WHERE feed_file = '$(ZHV_ZIP)'"
@@ -85,6 +85,6 @@ init: sql/schema.sql
 	$(psql) -v ON_ERROR_STOP=on -c "\copy $(SCHEMA).route_types FROM 'data/route_types.txt'"
 	$(psql) -v ON_ERROR_STOP=on -f sql/indices.sql
 
-zhv-init: sql/schema-zhv.sql
+zhv_init: sql/schema-zhv.sql
 	$(psql) -v ON_ERROR_STOP=on -f $<
 	$(psql) -v ON_ERROR_STOP=on -f sql/zhv-indices.sql
