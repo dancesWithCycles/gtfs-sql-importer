@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 
-TABLES = calendar \
+TABLES = stop_zhv \
+	calendar \
 	pathways \
 	translations \
 	shapes \
