@@ -145,7 +145,7 @@ CREATE TABLE stops_zhv (
   Longitude DOUBLE PRECISION,
   Description TEXT,
   the_geom geometry(point, 4326),
-  CONSTRAINT stops_pkey PRIMARY KEY (feed_index, SeqNo)
+  CONSTRAINT stops_zhv_pkey PRIMARY KEY (feed_index, SeqNo)
 );
 
 CREATE TABLE stops (
