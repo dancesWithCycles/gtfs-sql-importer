@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-TABLES = stop_zhv \
+TABLES = stops_zhv \
 	calendar \
 	pathways \
 	translations \
