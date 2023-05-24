@@ -1,5 +1,7 @@
 SHELL := /bin/bash
 
+TABLES_ZHV = ${ZHV_CSV}
+
 TABLES = calendar \
 	pathways \
 	translations \
@@ -14,6 +16,8 @@ TABLES = calendar \
 	frequencies \
 	attributions \
 	stop_times
+
+SCHEMA_ZHV = zhv_load
 
 SCHEMA = gtfs
 
@@ -42,8 +46,16 @@ load: $(addprefix load-,$(TABLES))
 	$(psql) -v schema=$(SCHEMA) -v feed_file=$(GTFS) --set srid=$(SRID) -f sql/stop_time_update_distance.sql
 	@$(psql) -t -A -c "SELECT format('* loaded %s with feed index = %s', feed_file, feed_index) FROM $(SCHEMA).feed_info WHERE feed_file = '$(GTFS)'"
 
+zhv-load: $(addprefix zhv-load-,$(TABLES_ZVH))
+	$(psql) -v schema=$(SCHEMA_ZHV) -v feed_file=$(ZHV_ZIP) --set srid=$(SRID) -f sql/shape_geoms_populate.sql
+	$(psql) -v schema=$(SCHEMA_ZHV) -v feed_file=$(ZHV_ZIP) --set srid=$(SRID) -f sql/stop_time_update_distance.sql
+	@$(psql) -t -A -c "SELECT format('* loaded %s with feed index = %s', feed_file, feed_index) FROM $(SCHEMA_ZHV).feed_info WHERE feed_file = '$(ZHV_ZIP)'"
+
 $(filter-out load-feed_info,$(addprefix load-,$(TABLES))): load-%: load-feed_info | $(GTFS)
 	$(SHELL) src/load.sh $| $(SCHEMA) $*
+
+$(filter-out zhv-load-feed_info,$(addprefix zhv-load-,$(TABLES))): load-%: load-feed_info | $(ZHV_ZIP)
+	$(SHELL) src/load.sh $| $(SCHEMA_ZHV) $*
 
 load-feed_info: | $(GTFS) ## Insert row into feed_index, if necessary
 	$(SHELL) ./src/load_feed_info.sh $| $(SCHEMA)
