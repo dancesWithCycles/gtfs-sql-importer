@@ -26,9 +26,9 @@ export PGOPTIONS="${PGOPTIONS} -c client_min_messages=warning"
 hed=$(unzip -p "$ZIP" "${TABLE}.txt" | head -n 1 | awk '{ sub(/^\xef\xbb\xbf/,"") } { print }')
 
 # Add unknown custom columns as text fields
-#echo "$hed" \
-#| awk -v schema="$SCHEMA" -v FS=, -v table="$TABLE" '{for (i = 1; i <= NF; i++) print "ALTER TABLE " schema "." table " ADD COLUMN IF NOT EXISTS " $i " TEXT;"}' \
-#| psql -q
+echo "$hed" \
+| awk -v schema="$SCHEMA" -v FS=, -v table="$TABLE" '{for (i = 1; i <= NF; i++) print "ALTER TABLE " schema "." table " ADD COLUMN IF NOT EXISTS " $i " TEXT;"}' \
+| psql -q
 
 # COPY rows from zip file, removing leading spaces and other junk
 unzip -p "$ZIP" "${TABLE}.txt" \
