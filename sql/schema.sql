@@ -137,7 +137,9 @@ CREATE TABLE levels (
 CREATE TABLE stops_zhv (
   feed_index int NOT NULL REFERENCES feed_info (feed_index) ON DELETE CASCADE,
   seqno BIGSERIAL NOT NULL,
+  type VARCHAR(7),
   dhid VARCHAR(63),
+  parent VARCHAR(31),
   name TEXT,
   latitude DOUBLE PRECISION,
   longitude DOUBLE PRECISION,
