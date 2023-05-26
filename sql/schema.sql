@@ -142,7 +142,7 @@ CREATE TABLE stops_zhv (
   "Latitude" DOUBLE PRECISION,
   "Longitude" DOUBLE PRECISION,
   the_geom geometry(point, 4326),
-  CONSTRAINT stops_zhv_pkey PRIMARY KEY (feed_index, SeqNo)
+  CONSTRAINT stops_zhv_pkey PRIMARY KEY (feed_index, "SeqNo")
 );
 
 -- trigger the_geom update with lat or lon inserted
