@@ -136,13 +136,13 @@ CREATE TABLE levels (
 
 CREATE TABLE stops_zhv (
   feed_index int NOT NULL REFERENCES feed_info (feed_index) ON DELETE CASCADE,
-  "SeqNo" BIGSERIAL NOT NULL,
-  "DHID" VARCHAR(63),
-  "Name" TEXT,
-  "Latitude" DOUBLE PRECISION,
-  "Longitude" DOUBLE PRECISION,
+  seqno BIGSERIAL NOT NULL,
+  dhid VARCHAR(63),
+  name TEXT,
+  latitude DOUBLE PRECISION,
+  longitude DOUBLE PRECISION,
   the_geom geometry(point, 4326),
-  CONSTRAINT stops_zhv_pkey PRIMARY KEY (feed_index, "SeqNo")
+  CONSTRAINT stops_zhv_pkey PRIMARY KEY (feed_index, seqno)
 );
 
 -- trigger the_geom update with lat or lon inserted
