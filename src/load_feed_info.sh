@@ -4,8 +4,14 @@
 # It tries to load the file "feed_info.txt" from the zip file. If that file doesn't exist, it inserts a new row with no metadata
 ZIP=$1
 SCHEMA=${2}
+USER=${3}
+DB=${4}
+HOST=${5}
+PORT=${6}
+PSQL="psql -h $HOST -p $PORT -U $USER -d $DB"
+echo "PSQL: $PSQL"
 
-feed_index=$(psql -At -c "SELECT feed_index FROM ${SCHEMA}.feed_info WHERE feed_file = '${ZIP}'")
+feed_index=$(${PSQL} -At -c "SELECT feed_index FROM ${SCHEMA}.feed_info WHERE feed_file = '${ZIP}'")
 
 if [[ -n "$feed_index" ]]; then
     echo "Using existing feed_index = $feed_index"
@@ -20,14 +26,14 @@ if [[ $(unzip -Z -1 "$ZIP" | grep feed_info.txt) ]]; then
 
     echo "$hed" \
     | awk -v schema=$SCHEMA -v FS=, -v table=feed_info '{for (i = 1; i <= NF; i++) print "ALTER TABLE " schema "." table " ADD COLUMN IF NOT EXISTS " $i " TEXT;"}' \
-    | psql -q
+    | ${PSQL} -q
 
     unzip -p "$ZIP" feed_info.txt \
     | awk -v feed_file="$ZIP" '{ sub(/\r$/, ""); sub("^\"\",", ","); gsub(",\"\"", ","); gsub(/,[[:space:]]+/, ","); if (NF > 0) print $0 "," feed_file }' \
-    | psql -c "COPY ${SCHEMA}.feed_info (${hed},feed_file) FROM STDIN (FORMAT csv, HEADER on)"
+    | ${PSQL} -c "COPY ${SCHEMA}.feed_info (${hed},feed_file) FROM STDIN (FORMAT csv, HEADER on)"
 
 else
     # Start and end dates will be populated after insert to calendar_dates
-    psql -c "INSERT INTO ${SCHEMA}.feed_info (feed_file) VALUES ('${ZIP}') ON CONFLICT DO NOTHING";
+    ${PSQL} -c "INSERT INTO ${SCHEMA}.feed_info (feed_file) VALUES ('${ZIP}') ON CONFLICT DO NOTHING";
     
 fi
