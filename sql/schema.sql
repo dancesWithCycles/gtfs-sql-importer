@@ -134,30 +134,6 @@ CREATE TABLE levels (
   PRIMARY KEY (feed_index, level_id)
 );
 
-CREATE TABLE stops_zhv (
-  feed_index int NOT NULL REFERENCES feed_info (feed_index) ON DELETE CASCADE,
-  seqno BIGSERIAL NOT NULL,
-  type VARCHAR(7),
-  dhid VARCHAR(63),
-  parent VARCHAR(31),
-  name TEXT,
-  latitude DOUBLE PRECISION,
-  longitude DOUBLE PRECISION,
-  the_geom geometry(point, 4326),
-  CONSTRAINT stops_zhv_pkey PRIMARY KEY (feed_index, seqno)
-);
-
--- trigger the_geom update with lat or lon inserted
-CREATE OR REPLACE FUNCTION stop_zhv_geom_update() RETURNS TRIGGER AS $stop_zhv_geom$
-  BEGIN
-    NEW.the_geom = ST_SetSRID(ST_MakePoint(NEW.Longitude, NEW.Latitude), 4326);
-    RETURN NEW;
-  END;
-$stop_zhv_geom$ LANGUAGE plpgsql;
-
-CREATE TRIGGER stop_zhv_geom_trigger BEFORE INSERT OR UPDATE ON stops_zhv
-    FOR EACH ROW EXECUTE PROCEDURE stop_zhv_geom_update();
-
 CREATE TABLE stops (
   feed_index int NOT NULL REFERENCES feed_info (feed_index) ON DELETE CASCADE,
   stop_id text not null,

@@ -2,8 +2,7 @@ SHELL := /bin/bash
 
 GTFS = GTFS
 
-TABLES = stops_zhv \
-	calendar \
+TABLES = calendar \
 	pathways \
 	translations \
 	shapes \
