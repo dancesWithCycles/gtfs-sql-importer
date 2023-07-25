@@ -50,7 +50,6 @@ drop_indices drop_constraints drop_triggers drop_notnull: drop_%: sql/drop_%.sql
 
 load: $(addprefix load-,$(TABLES))
 	$(psql) -v schema=$(SCHEMA) -v feed_file=$(GTFS) --set srid=$(SRID) -f sql/shape_geoms_populate.sql
-	$(psql) -v schema=$(SCHEMA) -v feed_file=$(GTFS) --set srid=$(SRID) -f sql/stop_time_update_distance.sql
 	@$(psql) -t -A -c "SELECT format('* loaded %s with feed index = %s', feed_file, feed_index) FROM $(SCHEMA).feed_info WHERE feed_file = '$(GTFS)'"
 
 $(filter-out load-feed_info,$(addprefix load-,$(TABLES))): load-%: load-feed_info | $(GTFS)
