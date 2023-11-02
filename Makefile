@@ -39,10 +39,10 @@ load: $(addprefix load-,$(TABLES))
 	@$(psql) -t -A -c "SELECT format('* loaded %s with feed index = %s', feed_file, feed_index) FROM $(SCHEMA).feed_info WHERE feed_file = '$(GTFS)'"
 
 $(filter-out load-feed_info,$(addprefix load-,$(TABLES))): load-%: load-feed_info | $(GTFS)
-	$(SHELL) src/load.sh $| $(SCHEMA) $*
+	$(SHELL) src/load.sh $| $(SCHEMA) $* $(USER) $(HOST)
 
 load-feed_info: | $(GTFS) ## Insert row into feed_index, if necessary
-	$(SHELL) ./src/load_feed_info.sh $| $(SCHEMA)
+	$(SHELL) ./src/load_feed_info.sh $| $(SCHEMA) $(USER) $(HOST)
 
 vacuum: ; $(psql) -c "VACUUM ANALYZE"
 
