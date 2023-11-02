@@ -11,7 +11,11 @@ SCHEMA = gtfs
 
 SRID = 4326
 
-psql = $(strip psql -v schema=$(SCHEMA))
+HOST = host
+
+USER = user
+
+psql = $(strip psql -h $(HOST) -U $(USER) -v schema=$(SCHEMA))
 
 .PHONY: all load vacuum init clean \
 	test check truncate \
