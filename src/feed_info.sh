@@ -23,7 +23,9 @@ feed_publisher_name=DELFI
 feed_publisher_url=https://delfi.de
 feed_lang=de
 feed_start_date=$date
-feed_end_date=$date
+echo "start_date: ${feed_start_date}"
+feed_end_date=$((${date}+9999))
+echo "end_date: ${feed_end_date}"
 feed_version=1
 entry=${feed_publisher_name},${feed_publisher_url},${feed_lang},${feed_start_date},${feed_end_date},${feed_version}
 echo "entry: "

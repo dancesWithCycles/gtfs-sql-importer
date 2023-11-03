@@ -16,6 +16,7 @@ echo "gtfsZipFileName: $gtfsZipFileName"
 #
 unzipDir=${gtfsZipFilePath}/unzip
 echo "unzipDir: $unzipDir"
+rm -rf $unzipDir
 mkdir -p $unzipDir
 unzip -qq -d $unzipDir $gtfsZipFileName
 #
