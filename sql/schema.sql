@@ -364,10 +364,10 @@ CREATE TABLE transfers (
   to_stop_id text not null,
   transfer_type int not null REFERENCES transfer_types(transfer_type),
   min_transfer_time int,
-  -- Unofficial fields
   from_route_id text default null,
   to_route_id text default null,
-  service_id text default null,
+  from_trip_id text default null,
+  to_trip_id text default null,
   CONSTRAINT transfers_from_stop_fkey FOREIGN KEY (feed_index, from_stop_id)
     REFERENCES stops (feed_index, stop_id),
   CONSTRAINT transfers_to_stop_fkey FOREIGN KEY (feed_index, to_stop_id)
@@ -376,9 +376,10 @@ CREATE TABLE transfers (
     REFERENCES routes (feed_index, route_id),
   CONSTRAINT transfers_to_route_fkey FOREIGN KEY (feed_index, to_route_id)
     REFERENCES routes (feed_index, route_id),
-  CONSTRAINT transfers_service_fkey FOREIGN KEY (feed_index, service_id)
-    REFERENCES calendar (feed_index, service_id),
-  CONSTRAINT transfers_pkey PRIMARY KEY (feed_index, from_stop_id, to_stop_id)
+  CONSTRAINT transfers_from_trip_fkey FOREIGN KEY (feed_index, from_trip_id)
+    REFERENCES trips (feed_index, trip_id),
+  CONSTRAINT transfers_to_trip_fkey FOREIGN KEY (feed_index, to_trip_id)
+    REFERENCES trips (feed_index, trip_id)
 );
 
 CREATE TABLE pathway_modes (
