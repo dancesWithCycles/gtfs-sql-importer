@@ -18,7 +18,7 @@ echo "certSecret: $certSecret"
 cd ~
 rm -r ${HOME}/gtfs
 mkdir -p ${HOME}/gtfs
-curl --request GET --url $downloadUrl --header "Accept-Encoding: gzip, deflate"  --cert-type P12 --cert $HOME/certificate.p12:"$certSecret" --output ~/gtfs/gtfs.gz
+curl --request GET --url $downloadUrl --header "Accept-Encoding: gzip, deflate"  --cert-type P12 --cert $HOME/certificate.p12:"$certSecret" --output ${HOME}/gtfs/gtfs.gz
 #
 echo "Done."
 #done.
