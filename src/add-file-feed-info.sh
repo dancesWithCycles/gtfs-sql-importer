@@ -8,6 +8,9 @@ if [ $# -lt 2 ] ; then
     echo 'Call ./<script> <gtfs zip file path> <gtfs zip file name>'
     exit 1
 fi
+# decompress gtfs feed
+cd ${HOME}/gtfs
+gzip -d gtfs.gz
 #
 gtfsZipFilePath="$1"
 echo "gtfsZipFilePath: $gtfsZipFilePath"
