@@ -10,11 +10,8 @@ if [ $# -lt 2 ] ; then
 fi
 #
 downloadUrl="$1"
-#
 certSecret="$2"
-#
 output="${HOME}/gtfs/gtfs.gz"
-echo "output: $output"
 #
 cd ~
 rm -r ${HOME}/gtfs
