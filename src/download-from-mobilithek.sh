@@ -12,11 +12,12 @@ fi
 downloadUrl="$1"
 certSecret="$2"
 output="${HOME}/gtfs/gtfs.gz"
+echo "output: ${output}"
 #
 cd ~
 rm -r ${HOME}/gtfs
 mkdir -p ${HOME}/gtfs
-curl --request GET --url $downloadUrl --header "Accept-Encoding: gzip, deflate"  --cert-type P12 --cert $HOME/certificate.p12:"$certSecret" --output "$output"
+curl --request GET --url $downloadUrl --header "Accept-Encoding: gzip, deflate"  --cert-type P12 --cert $HOME/certificate.p12:"$certSecret" --output $output
 #
 echo "Done."
 #done.
