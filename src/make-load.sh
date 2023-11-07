@@ -5,7 +5,7 @@ echo "Started..."
 #
 # special variable $# is the number of arguments
 if [ $# -lt 5 ] ; then
-    echo 'Call ./<script> <db name> <db user> <db schema> <make file path> <work dir>'
+    echo 'Call ./<script> <db name> <db user> <db schema> <path to make file> <path to GTFS file>'
     exit 1
 fi
 #
