@@ -8,17 +8,18 @@ if [ $# -lt 2 ] ; then
     echo 'Call ./<script> <gtfs zip file path> <gtfs zip file name>'
     exit 1
 fi
-# decompress gtfs feed
-cd ${HOME}/gtfs
-gzip -d gtfs.gz
 #
 gtfsZipFilePath="$1"
 echo "gtfsZipFilePath: $gtfsZipFilePath"
 gtfsZipFileName=${gtfsZipFilePath}/"$2"
 echo "gtfsZipFileName: $gtfsZipFileName"
-#
 unzipDir=${gtfsZipFilePath}/unzip
 echo "unzipDir: $unzipDir"
+baseDir=$(dirname $0)
+echo "baseDir: $baseDir"
+# decompress gtfs feed
+gzip -d ${HOME}/gtfs/gtfs.gz
+# extract gtfs archive
 rm -rf $unzipDir
 mkdir -p $unzipDir
 unzip -qq -d $unzipDir $gtfsZipFileName
@@ -31,9 +32,7 @@ then
 else
     echo "feed_info.txt NOT present"
     # (): replaces the shell without creating a new process
-    BASEDIR=$(dirname $0)
-    echo "BASEDIR: ${BASEDIR}"
-    (sh ./${BASEDIR}/feed_info.sh $unzipDir)
+    (bash ./${baseDir}/feed_info.sh $unzipDir)
     zip -jr ${gtfsZipFileName}-feed_info.zip ${unzipDir}
 fi
 #
